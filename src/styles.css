@@ -931,6 +931,34 @@ button:focus-visible {
   letter-spacing: 0.06em;
 }
 
+.help-legal {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint);
+  font-family: var(--times);
+  font-size: 8px;
+  letter-spacing: 0.04em;
+}
+
+.help-legal span:last-child {
+  white-space: nowrap;
+}
+
+.help-legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(77, 68, 54, 0.28);
+  text-underline-offset: 2px;
+}
+
+.help-legal a:hover {
+  color: var(--ink);
+}
+
 /* Toast */
 .toast {
   position: fixed;
