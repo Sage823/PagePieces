@@ -1,51 +1,31 @@
-# 拾页 · Paper Pieces
+# Paper Pieces
 
-一个极简的浏览器手账编辑器。纸张带轻微纤维纹理，编辑器在落笔前保持空白，只在中央显示一句操作提示。
+**A quiet, local-first scrapbook for the web.**
 
-## 运行
+Paper Pieces is a minimal infinite canvas for arranging images and text into simple pages. It runs entirely in your browser, with no account, backend, or upload required.
 
-不要直接双击 `index.html`。浏览器以 `file://` 打开时无法正常加载 Vite 的模块、字体和依赖，所以看到的是不完整页面。
+## Features
 
-在 Windows 上直接双击 `start-editor.cmd`，它会启动本地服务并打开浏览器。
+- Local-first pages stored in the browser
+- Drag-and-drop or file-picker image import
+- On-device background removal
+- Resizable images and text
+- Pixel, serif, sans, and Times typography
+- Infinite canvas with PNG export
 
-也可以手动运行：
+## Quick start
 
 ```bash
 npm install
 npm run dev
 ```
 
-然后打开终端显示的地址，通常是 `http://localhost:4173/`。生产构建使用：
+Create a production build with:
 
 ```bash
 npm run build
-npm run preview
 ```
 
-## 操作
+## Deployment
 
-- 双击空白处添加文字；继续双击文字即可编辑。
-- 拖入图片，拖动摆放，拖右下角缩放，拖顶部圆点旋转。
-- 在空白处按住左键拖动，可以像无边际画布一样平移纸面。
-- 按 `Shift + Enter` 将当前画布收为一页，并自动翻到新的空白页。
-- 点击左上角 logo 打开页面条，查看自动编号的已存页面和总页数，点击任一项重新打开。
-- 右键图片可抠出主体、恢复整图、复制、调整层级或删除。
-- 双击图片可以快速切换整图与抠图状态。
-- 右键文字可切换像素体、宋体、黑体或 Times New Roman。
-- 文字不使用底部工具条；拖右下角会同步调整文本框宽度和字号。
-- 顶部可撤销、重做和导出 PNG。
-
-当前草稿和已存页面都会保存在浏览器 IndexedDB 中。抠图在设备本地完成，图片不会上传；首次使用会从外部来源加载完整精度模型，失败或超时后会自动改用本地边缘算法。
-
-## 验收
-
-```bash
-npm run build
-npm run qa
-```
-
-验收脚本会使用本机 Chrome 检查初始画面、文字排版、拖入图片、右键菜单、抠图切换、复制、PNG 导出、自动保存和移动端布局。
-
-## 部署
-
-Cloudflare Pages、GitHub、Netlify 和 Vercel 的完整命令与设置见 [DEPLOYMENT.md](./DEPLOYMENT.md)。
+See the [deployment guide](./DEPLOYMENT.md) for Cloudflare, GitHub, Netlify, and Vercel instructions.
