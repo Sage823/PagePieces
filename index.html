@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#f2efe7" />
+    <meta
+      name="description"
+      content="A quiet digital scrapbook. Drop in images, paste words, and turn a moment into a page."
+    />
+    <title>Paper Pieces · A Quiet Notebook</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23f2efe7'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='serif' font-size='17' fill='%2335332e'%3E拾%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app" class="app">
+      <main
+        id="board"
+        class="board"
+        aria-label="Notebook canvas. Double-click to add text, or add images."
+      >
+        <div class="paper-grain" aria-hidden="true"></div>
+        <div id="itemsLayer" class="items-layer"></div>
+        <div id="emptyHint" class="empty-hint" aria-hidden="true">
+          Double-click to write, drop in images, Shift + Enter to save a page.
+        </div>
+      </main>
+
+      <header id="topbar" class="topbar" aria-label="Notebook tools">
+        <button class="wordmark" type="button" data-action="pages" aria-label="Open saved pages" aria-expanded="false">
+          <span class="wordmark-mark">拾</span>
+          <span class="wordmark-copy">
+            <strong>拾页</strong>
+            <small>PAPER PIECES</small>
+          </span>
+        </button>
+
+        <nav class="topbar-actions" aria-label="Page actions">
+          <button
+            class="icon-action import-action"
+            type="button"
+            data-action="import"
+            aria-label="Add image"
+            title="Add image"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#icon-image"></use></svg>
+          </button>
+          <span class="toolbar-rule optional-action" aria-hidden="true"></span>
+          <button
+            id="undoButton"
+            class="icon-action optional-action"
+            type="button"
+            data-action="undo"
+            aria-label="Undo"
+            title="Undo · Ctrl/⌘ Z"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#icon-undo"></use></svg>
+          </button>
+          <button
+            id="redoButton"
+            class="icon-action optional-action"
+            type="button"
+            data-action="redo"
+            aria-label="Redo"
+            title="Redo · Ctrl/⌘ Shift Z"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#icon-redo"></use></svg>
+          </button>
+          <span class="toolbar-rule optional-action" aria-hidden="true"></span>
+          <button
+            class="icon-action optional-action"
+            type="button"
+            data-action="help"
+            aria-label="How to use"
+            title="How to use"
+          >
+            <svg class="icon" aria-hidden="true"><use href="#icon-help"></use></svg>
+          </button>
+          <button class="export-action optional-action" type="button" data-action="export">
+            <span>Export</span>
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg>
+          </button>
+        </nav>
+      </header>
+
+      <aside id="pagesPanel" class="pages-panel" aria-hidden="true">
+        <div class="pages-heading">
+          <span>Saved pages</span>
+          <strong id="pagesCount">0 pages</strong>
+        </div>
+        <button class="pages-new" type="button" data-action="new-page">
+          <span>＋</span>
+          New page
+        </button>
+        <div id="pagesList" class="pages-list"></div>
+        <div class="pages-storage">
+          <span>Local storage</span>
+          <strong id="pagesStorage">Calculating…</strong>
+        </div>
+      </aside>
+
+      <div id="contextMenu" class="context-menu" role="menu" aria-hidden="true"></div>
+
+      <div id="dropCurtain" class="drop-curtain" aria-hidden="true">
+        <div class="drop-card">
+          <svg class="drop-icon" viewBox="0 0 44 44" aria-hidden="true">
+            <path d="M22 7v24M12 20l10 11 10-11" />
+            <path d="M7 34v4h30v-4" />
+          </svg>
+          <p>Drop a moment here</p>
+          <span>JPG · PNG · WEBP · GIF</span>
+        </div>
+      </div>
+
+      <div id="helpPanel" class="help-panel" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+        <button class="panel-close" type="button" data-action="close-help" aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+        <div class="help-kicker">A QUIET LITTLE STUDIO</div>
+        <h1 id="helpTitle">Turn the everyday into a page.</h1>
+        <p class="help-intro">
+          Everything stays in your browser. Background removal runs on your device, so images are never uploaded.
+        </p>
+        <div class="help-grid">
+          <div>
+            <span>01</span>
+            <strong>Double-click the paper</strong>
+            <p>Start typing. Double-click any text to edit it again.</p>
+          </div>
+          <div>
+            <span>02</span>
+            <strong>Add an image</strong>
+            <p>Drop it in or use the small image button. Drag the corner handle to resize.</p>
+          </div>
+          <div>
+            <span>03</span>
+            <strong>Move the paper</strong>
+            <p>Hold and drag an empty area to explore the endless canvas.</p>
+          </div>
+          <div>
+            <span>04</span>
+            <strong>Right-click a piece</strong>
+            <p>Remove an image background, change layers, or choose a text font.</p>
+          </div>
+        </div>
+        <p class="help-footnote">
+          Shift + Enter saves a page · Delete removes · Ctrl/⌘ Z undoes · Ctrl/⌘ S exports
+        </p>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+      <input
+        id="imageInput"
+        class="visually-hidden"
+        type="file"
+        accept="image/*"
+        multiple
+        tabindex="-1"
+      />
+    </div>
+
+    <svg class="svg-sprite" aria-hidden="true">
+      <symbol id="icon-image" viewBox="0 0 24 24">
+        <rect x="3.5" y="4.5" width="17" height="15" rx="2" />
+        <circle cx="9" cy="10" r="1.4" />
+        <path d="m5.5 17 4.8-4.8 3.3 3.3 2.5-2.5 2.4 2.4" />
+      </symbol>
+      <symbol id="icon-undo" viewBox="0 0 24 24">
+        <path d="M9 7 4.5 11.5 9 16" />
+        <path d="M5 11.5h8.2c3.5 0 5.8 2 5.8 5.1" />
+      </symbol>
+      <symbol id="icon-redo" viewBox="0 0 24 24">
+        <path d="m15 7 4.5 4.5L15 16" />
+        <path d="M19 11.5h-8.2c-3.5 0-5.8 2-5.8 5.1" />
+      </symbol>
+      <symbol id="icon-help" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M9.8 9.3a2.4 2.4 0 1 1 3.5 2.1c-.9.5-1.3 1-1.3 2.1" />
+        <path d="M12 16.9h.01" />
+      </symbol>
+      <symbol id="icon-arrow-up-right" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </symbol>
+      <symbol id="icon-copy" viewBox="0 0 24 24">
+        <rect x="8" y="8" width="11" height="11" rx="1.5" />
+        <path d="M16 8V6.5A1.5 1.5 0 0 0 14.5 5h-9A1.5 1.5 0 0 0 4 6.5v9A1.5 1.5 0 0 0 5.5 17H8" />
+      </symbol>
+      <symbol id="icon-layers" viewBox="0 0 24 24">
+        <path d="m12 4 8 4-8 4-8-4 8-4Z" />
+        <path d="m4.5 12 7.5 3.8 7.5-3.8M4.5 16l7.5 3.8 7.5-3.8" />
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24">
+        <path d="M5 7h14M9 7V4.5h6V7M7.5 7l.7 12h7.6l.7-12M10 11v4.5M14 11v4.5" />
+      </symbol>
+      <symbol id="icon-edit" viewBox="0 0 24 24">
+        <path d="m5 16.5-.8 3.3 3.3-.8L18 8.5 15.5 6 5 16.5Z" />
+        <path d="m14 7.5 2.5 2.5" />
+      </symbol>
+      <symbol id="icon-cutout" viewBox="0 0 24 24">
+        <path d="m4 20 6.4-6.4M20 4l-6.4 6.4" />
+        <circle cx="8" cy="8" r="3.2" />
+        <circle cx="16" cy="16" r="3.2" />
+      </symbol>
+    </svg>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
