@@ -2,6 +2,8 @@
 
 **A quiet, local-first scrapbook for the web.**
 
+https://pagepieces.rguoan.workers.dev/
+
 Paper Pieces is a minimal infinite canvas for arranging images and text into simple pages. It runs entirely in your browser, with no account, backend, or upload required.
 
 ## Features
